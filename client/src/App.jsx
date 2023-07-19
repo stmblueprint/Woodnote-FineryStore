@@ -22,7 +22,13 @@ function App() {
   const [clientId, setClientId] = useState('');
   const [loading, setLoading] = useState(true); // to get clientId before the page loads
 
+
+
+
+
   useEffect(() => {
+  
+
     const fetchClientId = async () => {
       const qRef = query(collection(db, 'AdminItems'), where('payPalClientId', '!=', ''));
       const querySnapshot = await getDocs(qRef);
@@ -39,6 +45,7 @@ function App() {
     };
 
     fetchClientId();
+
   }, []);
 
   return (
