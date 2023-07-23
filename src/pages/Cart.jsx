@@ -5,25 +5,63 @@ import { useCart } from "react-use-cart";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import { doc, setDoc, updateDoc, arrayUnion, getDoc, arrayRemove } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+
+
 
 const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
   const { isEmpty, totalUniqueItems, items, updateItemQuantity, removeItem } = useCart();
+  const [email, setEmail] = useState("");
 
   const subtotal = items.reduce((total, item) => Number(item.price) * Number(totalUniqueItems), 0);
 
-  // update total whenever it changes to display in another view
-  useEffect(() => {
-    setTotalItems(totalUniqueItems);
-  }, [totalUniqueItems, setTotalItems]);
   
-
-
   const toggleCart = () => {
     setIsOpen(!isOpen);
   };
 
+  
+  // ------------------------------------------------------------------------------
+    const storedUserUserId = sessionStorage.getItem("uid");
+    const parsedUserId = JSON.parse(storedUserUserId);
+    const cartId = parsedUserId;
+  // ------------------------------------------------------------------------------
+
+// Function to update cart items in Firestore
+const updateCartItemsInFirestore = async (updatedItems) => {
+  try {
+    // Replace "your_cart_document_id" with the actual cart document ID in Firestore
+    const cartRef = doc(db, "Orders", cartId);
+
+    // Update the 'items' field in Firestore with the updatedItems array
+    await setDoc(cartRef, { items: updatedItems }, { merge: true });
+
+    console.log("Cart items updated in Firestore successfully!");
+  } catch (error) {
+    console.error("Error updating cart items in Firestore: ", error);
+  }
+};
+
+  // update total whenever it changes to display in another view
+  useEffect(() => {
+    const storedEmail = sessionStorage.getItem("email");
+    const parsedEmail = JSON.parse(storedEmail);
+    setEmail(parsedEmail);
+    setTotalItems(totalUniqueItems);
+
+    if (items) {
+      updateCartItemsInFirestore(items);
+    }
+
+
+  }, [totalUniqueItems, setTotalItems, items]);
+
+  
+
   return (
     <>
+    {items.price}
       {/* <button onClick={toggleCart}>Open Cart ({totalUniqueItems})</button> */}
       {isOpen  && (
         <div className="cart-popup">
@@ -71,7 +109,13 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
             </div>
             
             <div className="button-style-2 center"style={{marginTop: "bold"}}>
-               <button className="button-style-1"><Link to={"/shipping"} style={{color: "white"}}>Checkout</Link></button>
+               <button className="button-style-1">
+               {email ? (
+                  <Link to={"/shipping"} style={{ color: "white" }}>
+                    Checkout
+                  </Link>) : (<Link to={"/account"} style={{ color: "white" }}>Checkout</Link>
+                )}
+               </button>
             </div>
           </div>
         </div>
@@ -81,3 +125,4 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
 };
 
 export default CartPopup;
+

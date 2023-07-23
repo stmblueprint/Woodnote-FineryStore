@@ -64,13 +64,13 @@ body{
   left: 1rem;
 }
 .cart{
- position: absolute;
- right: 10%;
+
+  position: absolute;
+  right: 15%;
 }
 .cart{
   display: grid;
-  grid-template-columns: auto;
-  gap: 20px
+  grid-template-columns: auto ;
 }
 
 .nav-links > span{
@@ -347,6 +347,17 @@ a{
   opacity: 1;
   
 }
+.button-style-4{
+  background-color: transparent;
+  color: rgb(6, 100, 107);
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+
+  
+  
+}
+
 
 .cart-items > div{
   display: grid;
@@ -443,7 +454,50 @@ form > div{
 }
 
 
+.form-container{
+  border-radius: 3px;
+  border: 0.6px solid rgba(172, 172, 172, 0.737);
+  width: 70vw;
+  padding: 10px;
+}
 
+.icon{
+  font-size: 18px;
+  margin-left: 20px;
+}
+.count-position{
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px;
 
+}
+.error-msg-container{
+  margin-top: -49px;
 
+}
+.error-msg{
+  background-color: rgba(213, 115, 115, 0.37);
+  color: rgb(241, 33, 33);
+  font-size: 20px;
+  height: 10px;
+  width: 100vw;
+  padding: 10px;
+  border-radius: 4px;
+}
 
+.positive-msg-1-container{
+  margin-top: -55px;
+
+}
+.positive-msg-1{
+  background-color: rgba(167, 213, 115, 0.19);
+  color: rgb(54, 141, 63);
+  font-size: 20px;
+  height: 10px;
+  width: 100vw;
+  padding: 10px;
+  border-radius: 4px;
+}

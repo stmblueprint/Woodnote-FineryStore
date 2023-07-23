@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate } from 'react-router-dom';
 
+
 import {
     collection,
     deleteDoc,
@@ -24,6 +25,8 @@ const Catalog = () => {
 
     const navigate = useNavigate();
     const price = '49.00'
+    
+
 
     const handleProductClick = (productId, title, img, colors, price, sizes) => {
         navigate(`/product/${productId}`, { state: { title, img, colors, price, sizes } });
@@ -91,7 +94,6 @@ useEffect(() => {
         
            <div className="home-container">
             <Header/>
-
             <div className="products-container center">
                 {data ? (
                     <div className="product-container center">

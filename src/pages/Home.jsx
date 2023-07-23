@@ -18,7 +18,7 @@ const Body = () => {
             <section className="homepage-intro-section-container center">
                 <div >
                     <div className="heading-1">Find unique clothing 
-                        designs created by <br/>the artist of this brand.
+                        designs created by <br/>the artist; @stmblueprint.
                     </div>
                         <br/>
                         <div className="caption-1">

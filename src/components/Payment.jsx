@@ -6,9 +6,11 @@ import Footer from "./Footer";
 import Header from "./Header";
 import PaymentView from "./PaymentView";
 
+import { collection, getDocs, getDoc, doc, documentId, addDoc, where, setDoc, query } from "firebase/firestore";
+import { db } from "../firebase/firebase" 
 
-// This values are the props in the UI
-const amount = "2";
+
+const amount = JSON.parse(sessionStorage.getItem("subtotal"));
 const style = {"layout": "vertical"};
 
  const Payment = ({currency, showSpinner}) => {
@@ -44,7 +46,7 @@ const style = {"layout": "vertical"};
                 disabled={false}
                 forceReRender={[amount, currency, style]}
                 fundingSource={undefined}
-                createOrder={(data, actions) => {
+                createOrder={ async (data, actions) => {
                     return actions.order
                         .create({
                             purchase_units: [

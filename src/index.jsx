@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { CartProvider } from 'react-use-cart';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { AuthViewManager } from './pages/auth/account';
 import {
   collection,
   getDocs,
@@ -68,6 +69,8 @@ function App() {
             <Route path="/shipping" element={<ShippingInfo />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/countries" element={<GetCountryList />} />
+            <Route path="/account" element={<AuthViewManager />} />
+
           </Routes>
         </PayPalScriptProvider>
       )}
