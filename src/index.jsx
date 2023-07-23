@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { CartProvider } from 'react-use-cart';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
-import { AuthViewManager } from './pages/auth/account';
+import { AuthViewManager } from './pages/auth/Account';
 import {
   collection,
   getDocs,
