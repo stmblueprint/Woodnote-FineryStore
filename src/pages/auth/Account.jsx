@@ -280,11 +280,11 @@ export const AuthViewManager = () => {
     return(
         <>
         
-          <div id="sign-in-fields">
+          <div id="sign-in-fields" style={{display: "block"}}>
             <SignIn />
           </div>
 
-          <div id="registration-fields">
+          <div id="registration-fields" style={{display: "none"}}>
             <CreateAccount/>
           </div>
         </>

@@ -20,7 +20,7 @@ import {
 
 const Catalog = () => {
     const [data, setData] = useState(null);
-    const [apiKey, setApiKey] = useState(null);
+    // const [apiKey, setApiKey] = useState(null);
     // const [authToken, setAuthToken] = useState(null);
 
     const navigate = useNavigate();
@@ -33,20 +33,20 @@ const Catalog = () => {
 
       };
 
-      // prinful api key stored in firebase firestore
-      const fetchApiKey = async () => {
-        const qRef = query(collection(db, "AdminItems"), where("printfulApiKey", "!=", ""));
-        const querySnapshot = await getDocs(qRef);
+    // prinful api key stored in firebase firestore
+    //   const fetchApiKey = async () => {
+    //     const qRef = query(collection(db, "AdminItems"), where("printfulApiKey", "!=", ""));
+    //     const querySnapshot = await getDocs(qRef);
 
-        if (!querySnapshot.empty) {
-            const doc = querySnapshot.docs[0];
-            const apiKey = doc.data().printfulApiKey;
+    //     if (!querySnapshot.empty) {
+    //         const doc = querySnapshot.docs[0];
+    //         const apiKey = doc.data().printfulApiKey;
 
-            return setApiKey(apiKey);
-          } else {
-            return null; // key not found
-          }
-      };
+    //         return setApiKey(apiKey);
+    //       } else {
+    //         return null; // key not found
+    //       }
+    //   };
       
 
       
@@ -56,44 +56,42 @@ const Catalog = () => {
 //     setSelectedColor(event.target.value);
 // };
 
-useEffect(() => {
-    const fetchData = async () => {
-
-        try {
-            const response = await fetch('https://api.printful.com/product-templates', {
-                method: 'GET',
-                headers: {
-                    // fetch authToken from database
-                    Authorization: `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json', 
-
-                },     
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            // lambda function + API Gateway for secure api response and CORS management
+            const response = await fetch('https://nvl7vmf31e.execute-api.us-east-1.amazonaws.com/prod1/proxy', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
             });
-
+      
             if (response.ok) {
-                const jsonData = await response.json();
-                setData(jsonData.result.items);
-              } else {
-                // Handle error response
-                console.error('API request failed:', response);
-              }
-            } catch (error) {
-              // Handle network or other errors
-              console.error('Error:', error);
+              const jsonData = await response.json();
+              console.log(jsonData[0].id); // Log the response data to check its structure
+              setData(jsonData);
+            } else {
+              // Handle error response
+              console.error('API request failed:', response);
             }
-          };
-
-            fetchApiKey();
-            fetchData();
-        }, [apiKey]);
-
-
+          } catch (error) {
+            // Handle network or other errors
+            console.error('Error:', error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
 
     return (
         <>
         
            <div className="home-container">
             <Header/>
+            
+
             <div className="products-container center">
                 {data ? (
                     <div className="product-container center">
@@ -101,7 +99,6 @@ useEffect(() => {
                          //  appending the index to the product.id within the key prop, 
                   // you ensure that each key is unique and address the warning
                   //  about non-unique keys.
-               
                         <div  key={`${product.id}-${index}`} onClick={() => handleProductClick(
                                      product.id, 
                                      product.title, 
