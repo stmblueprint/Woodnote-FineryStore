@@ -2,9 +2,9 @@
 
 const express = require('express');
 const axios = require('axios');
-
 const app = express();
-const port = 5001;
+
+// const port = 5001;
 
 require('dotenv').config();
 
@@ -56,6 +56,7 @@ app.get('/api/products/:productId', async (req, res) => {
 });
 
 // Start the server
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
