@@ -8,9 +8,10 @@ const app = express();
 
 require('dotenv').config();
 
+// Add this middleware to handle .jsx files as JavaScript
 app.use((req, res, next) => {
   if (req.url.endsWith('.jsx')) {
-    res.type('text/babel');
+    res.set('Content-Type', 'text/javascript');
   }
   next();
 });
