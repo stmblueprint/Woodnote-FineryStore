@@ -93,12 +93,12 @@ const Variants = ({setImage, image}) => {
 
         if (response.ok) {
           const jsonData = await response.json();
-          
           setData(jsonData.result.sync_variants);
         } else {
-          // Handle error response
-          console.error("API request failed:", response);
+          const errorData = await response.json();
+          console.error("API request failed:", errorData);
         }
+        
       } catch (error) {
         // Handle network or other errors
         console.error("Error:", error);
