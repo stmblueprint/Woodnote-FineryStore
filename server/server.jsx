@@ -29,20 +29,20 @@ app.get('/api/products/:productId', async (req, res) => {
       "51065350", // Men's Hoodie
       "50851839" // Unisex eco sweatshirt
     ]
-    let currentVariants = "312643659"
+    let currentVariants = ""
   
     // not the store id is not the same as the template id
     const { productId } = req.params;
 
-    // if(productId === variants[2]){
-    //   currentVariants = "312643659"
-    // }
-    // else if(productId === variants[0]){
-    //   currentVariants = "312183147"
-    // }
-    // else if(productId === variants[1]){
-    //   currentVariants = "313001069"
-    // }
+    if(productId === variants[2]){
+      currentVariants = "312643659"
+    }
+    else if(productId === variants[0]){
+      currentVariants = "312183147"
+    }
+    else if(productId === variants[1]){
+      currentVariants = "313001069"
+    }
     
   const storeId = "8533797";
 
