@@ -2,7 +2,7 @@
 
 const express = require('express');
 const axios = require('axios');
-// const cors = require('cors');
+const cors = require('cors');
 const app = express();
 
 // const port = 5001;
@@ -18,7 +18,7 @@ require('dotenv').config();
 // });
 
 // cors middleware to enable CORS
-// app.use(cors());
+app.use(cors());
 
 // Define a server route to handle the Printful API request
 app.get('/api/products/:productId', async (req, res) => {

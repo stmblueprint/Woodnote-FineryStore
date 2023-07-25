@@ -95,8 +95,9 @@ const Variants = ({setImage, image}) => {
           const jsonData = await response.json();
           setData(jsonData.result.sync_variants);
         } else {
+          // If the response status is not OK (200), handle the error
           const errorData = await response.json();
-          console.error("API request failed:", errorData);
+          throw new Error(`API request failed: ${JSON.stringify(errorData)}`);
         }
         
       } catch (error) {
