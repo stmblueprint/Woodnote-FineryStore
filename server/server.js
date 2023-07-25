@@ -8,6 +8,13 @@ const app = express();
 
 require('dotenv').config();
 
+app.use((req, res, next) => {
+  if (req.url.endsWith('.jsx')) {
+    res.type('text/babel');
+  }
+  next();
+});
+
 
 // Define a server route to handle the Printful API request
 app.get('/api/products/:productId', async (req, res) => {
