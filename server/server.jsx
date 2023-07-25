@@ -3,7 +3,6 @@
 import express from 'express';
 import { get } from 'axios';
 import cors from 'cors';
-
 const app = express();
 
 // const port = 5001;
@@ -24,7 +23,7 @@ app.use(cors());
 // Define a server route to handle the Printful API request
 app.get('/api/products/:productId', async (req, res) => {
 
-    const printfulApiKey = "OVKlMewDhLWIX5CB60Kz4eXpuS1HBovJRTw9Ib0K";
+    const printfulApiKey = process.env.PRINTFUL_API_KEY;
     const variants = [
       "33017314", // Men's Embroidered Long Sleeve
       "51065350", // Men's Hoodie
