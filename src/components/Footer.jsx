@@ -27,7 +27,7 @@ const Footer = () => {
                 </tr>
                     <tr>
                         {/* <td>Tiktok</td> */}
-                        <td>Our Story</td>
+                        {/* <td>Our Story</td> */}
                         <td>Return Policy</td>
                     </tr>
                     <tr>
