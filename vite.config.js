@@ -4,11 +4,9 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  proxy: {
-    '/api': {
-      target: 'http://localhost:5001', // Replace this with the correct URL of your backend server
-      changeOrigin: true,
-      rewrite: (path) => path.replace(/^\/api/, '')
+  server:{
+    proxy: {
+      '/api': 'https://main.d37zqkts5spj19.amplifyapp.com',
     }
   },
   build: {
