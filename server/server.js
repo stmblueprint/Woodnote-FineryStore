@@ -13,13 +13,12 @@ require('dotenv').config();
 app.get('/api/products/:productId', async (req, res) => {
 
     const printfulApiKey = process.env.PRINTFUL_API_KEY;
-
     const variants = [
       "33017314", // Men's Embroidered Long Sleeve
       "51065350", // Men's Hoodie
       "50851839" // Unisex eco sweatshirt
     ]
-    let currentVariants = "312643659"
+    let currentVariants = ""
   
     // not the store id is not the same as the template id
     const { productId } = req.params;
