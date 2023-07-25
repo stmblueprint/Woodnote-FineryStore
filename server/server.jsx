@@ -1,8 +1,9 @@
 
 
-const express = require('express');
-const axios = require('axios');
-const cors = require('cors');
+import express from 'express';
+import { get } from 'axios';
+import cors from 'cors';
+
 const app = express();
 
 // const port = 5001;
@@ -23,7 +24,7 @@ app.use(cors());
 // Define a server route to handle the Printful API request
 app.get('/api/products/:productId', async (req, res) => {
 
-    const printfulApiKey = process.env.PRINTFUL_API_KEY;
+    const printfulApiKey = "OVKlMewDhLWIX5CB60Kz4eXpuS1HBovJRTw9Ib0K";
     const variants = [
       "33017314", // Men's Embroidered Long Sleeve
       "51065350", // Men's Hoodie
@@ -49,7 +50,7 @@ app.get('/api/products/:productId', async (req, res) => {
   const apiUrl = `https://api.printful.com/store/products/${currentVariants}?store_id=${storeId}`;
 
   try {
-    const response = await axios.get(apiUrl, {
+    const response = await get(apiUrl, {
       
       headers: {
         Authorization: `Bearer ${printfulApiKey}`,
