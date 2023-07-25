@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server:{
     proxy: {
-      '/api': 'https://main.d37zqkts5spj19.amplifyapp.com',
+      '/api': 'http://localhost:5001',
     }
   },
   build: {
