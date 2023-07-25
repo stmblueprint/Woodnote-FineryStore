@@ -9,12 +9,12 @@ const app = express();
 require('dotenv').config();
 
 // Add this middleware to handle .jsx files as JavaScript
-app.use((req, res, next) => {
-  if (req.url.endsWith('.jsx')) {
-    res.set('Content-Type', 'text/javascript');
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   if (req.url.endsWith('.jsx')) {
+//     res.set('Content-Type', 'text/javascript');
+//   }
+//   next();
+// });
 
 
 // Define a server route to handle the Printful API request
