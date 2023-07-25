@@ -26,9 +26,9 @@ const Footer = () => {
                     <th>Resources</th>
                 </tr>
                     <tr>
-                        {/* <td>Tiktok</td> */}
-                        {/* <td>Our Story</td> */}
-                        {/* <td>Return Policy</td> */}
+                        <td>Tiktok</td>
+                        <td>Our Story</td>
+                        <td>Return Policy</td>
                     </tr>
                     <tr>
                         <td>Instagram</td>
