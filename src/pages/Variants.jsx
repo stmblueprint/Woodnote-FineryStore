@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 // import { useNavigate } from "react-router-dom";
 // import { checkPropTypes } from "prop-types";
-import { useParams } from "react-router-dom";
+import { useFetcher, useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import {
   collection,
@@ -13,18 +13,27 @@ import {
   query,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
-// import {encode} from 'base-64'
-// store id: 8533797
-// variant id: 312183147
+
+import axios from "axios";
+
 
 const Variants = ({ setImage, image }) => {
   const [data, setData] = useState(null);
   const [hideBrandLogo, setHideBrandLogo] = useState(true);
+  const [productId, setProductId] = useState(null);
 
   const handleSelectedProduct = (selectedProduct) => {
     setImage(selectedProduct);
   };
-
+  useEffect(() => {
+    // use this instead of location.state to avoid losing state on refresh
+    const productInfo = JSON.parse(localStorage.getItem("productInfo"));
+  
+    if (productInfo) {
+      const { productId } = productInfo;
+      setProductId(productId);
+    }
+  }, []);
   const store_id = "8533797";
   const variants = [
     "33017314", // Men's Embroidered Long Sleeve
@@ -34,7 +43,7 @@ const Variants = ({ setImage, image }) => {
   let currentVariants = "";
 
   // not the store id is not the same as the template id
-  const { productId } = useParams();
+  // const { productId } = useParams();
 
   if (productId == variants[2]) {
     currentVariants = "312643659";
@@ -88,33 +97,38 @@ const Variants = ({ setImage, image }) => {
     const fetchData = async () => {
       // const printfulApiKey = "OVKlMewDhLWIX5CB60Kz4eXpuS1HBovJRTw9Ib0K";
       // const apiUrl = `https://api.printful.com/store/products/${currentVariants}?store_id=${store_id}`;
-      const apiUrl = 'https://3lmrgfdhr5.execute-api.us-east-1.amazonaws.com/prod/proxy';
+      const apiUrl = 'https://3lmrgfdhr5.execute-api.us-east-1.amazonaws.com/prod/product';
       try {
         // const response = await fetch(`/api/products/${productId}`,
-        const response = await fetch(apiUrl, {
-          method: "GET",
-          headers: {
-            // Authorization: `Bearer ${printfulApiKey}`,
-            "Content-Type": "application/json",
+        const response = await axios.post(
+          apiUrl,
+           { productId }, 
+           {
+              headers: {
+                "Content-Type": "application/json",
           },
         });
 
-        if (response.ok) {
-          const jsonData = await response.json();
+        if (response.status === 200) {
+          const jsonData = await response.data;
           setData(jsonData.result.sync_variants);
+          console.log(jsonData.result.sync_variants)
         } else {
           // If the response status is not OK (200), handle the error
-          const errorData = await response.json();
-          throw new Error(`API request failed: ${JSON.stringify(errorData)}`);
+          // const errorData = await response.json();
+          // throw new Error(`API request failed: ${JSON.stringify(errorData)}`);
+          console.error('API request failed:', response);
+
         }
+    
       } catch (error) {
         // Handle network or other errors
         console.error("Error:", error);
       }
     };
-    fetchApiKey();
-    fetchData();
-  }, [apiKey, currentVariants, productId]);
+      // fetchApiKey();
+      fetchData();
+  }, [apiKey, productId]);
 
   return (
     <>
