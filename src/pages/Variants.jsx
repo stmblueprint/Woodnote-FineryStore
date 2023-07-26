@@ -24,26 +24,26 @@ const Variants = ({setImage, image}) => {
     setImage(selectedProduct)
 }
 
-  // const store_id = "8533797";
-  // const variants = [
-  //   "33017314", // Men's Embroidered Long Sleeve
-  //   "51065350", // Men's Hoodie
-  //   "50851839" // Unisex eco sweatshirt
-  // ]
-  // let currentVariants = ""
+  const store_id = "8533797";
+  const variants = [
+    "33017314", // Men's Embroidered Long Sleeve
+    "51065350", // Men's Hoodie
+    "50851839" // Unisex eco sweatshirt
+  ]
+  let currentVariants = ""
 
   // not the store id is not the same as the template id
   const { productId } = useParams(); 
 
-  // if(productId == variants[2]){
-  //   currentVariants = "312643659"
-  // }
-  // else if(productId == variants[0]){
-  //   currentVariants = "312183147"
-  // }
-  // else if(productId == variants[1]){
-  //   currentVariants = "313001069"
-  // }
+  if(productId == variants[2]){
+    currentVariants = "312643659"
+  }
+  else if(productId == variants[0]){
+    currentVariants = "312183147"
+  }
+  else if(productId == variants[1]){
+    currentVariants = "313001069"
+  }
 
   const handleHideBrandLogo = () => {
     setHideBrandLogo(true);
@@ -80,12 +80,16 @@ const Variants = ({setImage, image}) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      // const printfulApiKey = process.env.PRINTFUL_API_KEY;
+      const apiUrl = `https://api.printful.com/store/products/${currentVariants}?store_id=${store_id}`;
+
       try {
-        const response = await fetch(`/api/products/${productId}`,
+        // const response = await fetch(`/api/products/${productId}`,
+        const response = await fetch(apiUrl,
           {
             method: "GET",
             headers: {
-              // fetch authToken from database
+              Authorization: `Bearer ${apiKey}`,
               "Content-Type": "application/json",
             },
           }
@@ -105,9 +109,9 @@ const Variants = ({setImage, image}) => {
         console.error("Error:", error);
       }
     };
-    // fetchApiKey();
+    fetchApiKey();
     fetchData();
-  }, [productId]);
+  }, [apiKey, currentVariants, productId]);
 
   return (
     <>
