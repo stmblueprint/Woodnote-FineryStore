@@ -87,11 +87,11 @@ const Variants = ({ setImage, image }) => {
 
     const fetchData = async () => {
       const printfulApiKey = "OVKlMewDhLWIX5CB60Kz4eXpuS1HBovJRTw9Ib0K";
-      const apiUrl = `https://api.printful.com/store/products/${currentVariants}?store_id=${store_id}`;
-
+      // const apiUrl = `https://api.printful.com/store/products/${currentVariants}?store_id=${store_id}`;
+      const apiUrl = 'https://3lmrgfdhr5.execute-api.us-east-1.amazonaws.com/prod/proxy';
       try {
         // const response = await fetch(`/api/products/${productId}`,
-        const response = await fetch(apiUrl, {
+        const response = await fetch(`${apiUrl}/${productId}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${printfulApiKey}`,
@@ -114,7 +114,7 @@ const Variants = ({ setImage, image }) => {
     };
     fetchApiKey();
     fetchData();
-  }, [apiKey, currentVariants]);
+  }, [apiKey, currentVariants, productId]);
 
   return (
     <>
