@@ -9,7 +9,7 @@ export default defineConfig({
       '/api': 'https://main.d37zqkts5spj19.amplifyapp.com',
     }
   },
-  // build: {
-  //   outDir: 'dist', // Specify the output directory for the build artifacts
-  // },
+  build: {
+    outDir: 'dist', // Specify the output directory for the build artifacts
+  },
 });
