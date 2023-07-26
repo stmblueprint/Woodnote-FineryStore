@@ -33,7 +33,7 @@ const Catalog = () => {
          // Save the product information to localStorage before navigating
       const productInfo = { productId, title, img, colors, price, sizes };
       localStorage.setItem("productInfo", JSON.stringify(productInfo));
-      navigate(`/product/${productId}`);
+      navigate(`/product/productId=${productId}`);
 
       };
 
