@@ -47,25 +47,7 @@ const Variants = ({ setImage, image }) => {
     setHideBrandLogo(true);
   };
 
-  const [apiKey, setApiKey] = useState(null);
-
-  // prinful api key stored in firebase firestore
-  const fetchApiKey = async () => {
-    const qRef = query(
-      collection(db, "AdminItems"),
-      where("printfulApiKey", "!=", "")
-    );
-    const querySnapshot = await getDocs(qRef);
-
-    if (!querySnapshot.empty) {
-      const doc = querySnapshot.docs[0];
-      const apiKey = doc.data().printfulApiKey;
-
-      return setApiKey(apiKey);
-    } else {
-      return null; // key not found
-    }
-  };
+  const [apiKey, setApiKey] = useState();
 
   // const [authToken, setAuthToken] = useState(null);
 
@@ -75,8 +57,30 @@ const Variants = ({ setImage, image }) => {
   // };
 
   useEffect(() => {
+  // prinful api key stored in firebase firestore
+  
+    const fetchApiKey = async () => {
+      const qRef = query(
+        collection(db, "AdminItems"),
+        where("printfulApiKey", "!=", "")
+      );
+      const querySnapshot = await getDocs(qRef);
+
+      if (!querySnapshot.empty) {
+        const doc = querySnapshot.docs[0];
+        const apiKey = doc.data().printfulApiKey;
+
+        return setApiKey(apiKey);
+      } else {
+        return null; // key not found
+      }
+    };
+
+
+
+
     const fetchData = async () => {
-      // const printfulApiKey = process.env.PRINTFUL_API_KEY;
+      const printfulApiKey = "OVKlMewDhLWIX5CB60Kz4eXpuS1HBovJRTw9Ib0K";
       const apiUrl = `https://api.printful.com/store/products/${currentVariants}?store_id=${store_id}`;
 
       try {
@@ -84,7 +88,7 @@ const Variants = ({ setImage, image }) => {
         const response = await fetch(apiUrl, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${apiKey}`,
+            Authorization: `Bearer ${printfulApiKey}`,
             "Content-Type": "application/json",
           },
         });
