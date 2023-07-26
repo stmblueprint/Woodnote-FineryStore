@@ -29,7 +29,11 @@ const Catalog = () => {
 
 
     const handleProductClick = (productId, title, img, colors, price, sizes) => {
-        navigate(`/product/${productId}`, { state: { title, img, colors, price, sizes } });
+        // navigate(`/product/${productId}`, { state: { title, img, colors, price, sizes } });
+         // Save the product information to localStorage before navigating
+      const productInfo = { productId, title, img, colors, price, sizes };
+      localStorage.setItem("productInfo", JSON.stringify(productInfo));
+      navigate(`/product/${productId}`);
 
       };
 

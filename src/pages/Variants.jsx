@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 // import { checkPropTypes } from "prop-types";
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   collection,
   deleteDoc,
@@ -56,6 +57,11 @@ const Variants = ({ setImage, image }) => {
   //     setSelectedColor(event.target.value);
   // };
 
+    // Get the product information passed from the Catalog page
+    // const location = useLocation();
+    // const { state } = location;
+    // const { productId, title, img, colors, price, sizes } = state || {};
+  
   useEffect(() => {
   // prinful api key stored in firebase firestore
   
