@@ -33,13 +33,14 @@ const [errorMsg, setErrorMsg] = useState(false);
 const { addItem } = useCart();
 const navigate = useNavigate();
 
-
-// const location = useLocation();
-// const { title, img, colors, price, sizes } = location.state || {}; 
-// const [image, setImage] = useState(img);
+ // useLocation for storing states doesnt work on the deployed server
+  // const location = useLocation();
+  // const { title, img, colors, price, sizes } = location.state || {}; 
+  // const [image, setImage] = useState(img);
 
  // Retrieve the product information from localStorage when the component mounts
  useEffect(() => {
+  // use this instead of location.state to avoid losing state on refresh
   const productInfo = JSON.parse(localStorage.getItem("productInfo"));
 
   if (productInfo) {
