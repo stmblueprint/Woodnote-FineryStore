@@ -59,8 +59,8 @@ const navigate = useNavigate();
 const handleColorClick = (selectedColor) => {
     setSelectedColor(selectedColor)
 }
-const handleSizeClick = (size) => {
-    setSelectedSize(size)
+const handleSizeClick = (selectedSize) => {
+    setSelectedSize(selectedSize)
 }
 
 
@@ -76,9 +76,9 @@ const handleAddToCart = () => {
         id: productId,
         name: title,
         image: image,
-        color: colors,
+        color: selectedColor,
         quantity: 1,
-        size: size,
+        size: selectedSize,
         price: price,
         retail_price: '',
         prod: {

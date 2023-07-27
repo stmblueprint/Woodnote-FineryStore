@@ -48,8 +48,6 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
       }
     };
 
-
-
     const storedEmail = sessionStorage.getItem("email");
     const parsedEmail = JSON.parse(storedEmail);
     setEmail(parsedEmail);
@@ -58,8 +56,6 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
     if (items) {
       updateCartItemsInFirestore(items);
     }
-
-
   }, [totalUniqueItems, setTotalItems, items, cartId]);
 
   
