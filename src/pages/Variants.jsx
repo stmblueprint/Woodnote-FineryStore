@@ -74,23 +74,22 @@ const Variants = ({ setImage, image }) => {
   useEffect(() => {
   // prinful api key stored in firebase firestore
   
-    const fetchApiKey = async () => {
-      const qRef = query(
-        collection(db, "AdminItems"),
-        where("printfulApiKey", "!=", "")
-      );
-      const querySnapshot = await getDocs(qRef);
+    // const fetchApiKey = async () => {
+    //   const qRef = query(
+    //     collection(db, "AdminItems"),
+    //     where("printfulApiKey", "!=", "")
+    //   );
+    //   const querySnapshot = await getDocs(qRef);
 
-      if (!querySnapshot.empty) {
-        const doc = querySnapshot.docs[0];
-        const apiKey = doc.data().printfulApiKey;
+    //   if (!querySnapshot.empty) {
+    //     const doc = querySnapshot.docs[0];
+    //     const apiKey = doc.data().printfulApiKey;
 
-        return setApiKey(apiKey);
-      } else {
-        return null; // key not found
-      }
-    };
-
+    //     return setApiKey(apiKey);
+    //   } else {
+    //     return null; // key not found
+    //   }
+    // };
 
 
 
@@ -100,9 +99,10 @@ const Variants = ({ setImage, image }) => {
       const apiUrl = 'https://3lmrgfdhr5.execute-api.us-east-1.amazonaws.com/prod/product';
       try {
         // const response = await fetch(`/api/products/${productId}`,
+        
         const response = await axios.post(
           apiUrl,
-           { productId }, 
+            {productId} , 
            {
               headers: {
                 "Content-Type": "application/json",
@@ -111,8 +111,15 @@ const Variants = ({ setImage, image }) => {
 
         if (response.status === 200) {
           const jsonData = await response.data;
-          setData(jsonData.result.sync_variants);
-          console.log(jsonData.result.sync_variants)
+          console.log(jsonData)
+          if (jsonData.result && jsonData.result.sync_variants) {
+            
+            setData(jsonData.result.sync_variants); // Set the data to the sync_variants array
+            console.log(jsonData.result.sync_variants);
+
+          } else {
+            console.error('Invalid API response:', jsonData);
+          }
         } else {
           // If the response status is not OK (200), handle the error
           // const errorData = await response.json();
@@ -128,7 +135,7 @@ const Variants = ({ setImage, image }) => {
     };
       // fetchApiKey();
       fetchData();
-  }, [apiKey, productId]);
+  }, [productId]);
 
   return (
     <>
