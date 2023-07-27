@@ -11,10 +11,11 @@ import CartPopup from "../pages/Cart";
 
 const ProductView = () => {
 
+const [productId, setProductId] = useState(null)
 const [title, setTitle] = useState(null);
 const [price, setPrice] = useState(null);
 const [image, setImage] = useState(null);
-const { productId } = useParams();
+// const { productId } = useParams();
 const [colors, setColor] = useState([]);
 const [selectedColor, setSelectedColor] = useState(null);
 const [size, setSize] = useState([]);
@@ -44,13 +45,14 @@ const navigate = useNavigate();
   const productInfo = JSON.parse(localStorage.getItem("productInfo"));
 
   if (productInfo) {
-    const { title, img, colors, price, sizes } = productInfo;
+    const { productId, title, img, colors, price, sizes } = productInfo;
     setColor(colors); // Set colors as an array
     setSize(sizes); // Set sizes as an array
     setDescription(null);
     setImage(img);
     setTitle(title);
     setPrice(price);
+    setProductId(productId)
   }
 }, []);
 
