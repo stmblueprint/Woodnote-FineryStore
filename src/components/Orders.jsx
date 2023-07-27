@@ -38,7 +38,7 @@ export const GetCountryList = ({ countryName, setCountryName, countryCode, setCo
         const fetchData = async () => {
     
             try {
-                const response = await fetch('https://api.printful.com/countries', {
+                const response = await fetch('https://gicst2aqzj.execute-api.us-east-1.amazonaws.com/prod/countries', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export const GetCountryList = ({ countryName, setCountryName, countryCode, setCo
     
                 if (response.ok) {
                     const jsonData = await response.json();
-                    setData(jsonData.result);
+                    setData(jsonData);
                   } else {
                     // Handle error response
                     console.error('API request failed:', response);
@@ -118,7 +118,7 @@ export const GetStateList = ({ stateName, setStateName, stateCode, setStateCode 
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch('https://api.printful.com/countries', {
+          const response = await fetch('https://gicst2aqzj.execute-api.us-east-1.amazonaws.com/prod/countries', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ export const GetStateList = ({ stateName, setStateName, stateCode, setStateCode 
           if (response.ok) {
             const jsonData = await response.json();
             // Here, we'll map the data to match the code-name order in the response
-            const formattedData = jsonData.result.map((country) => ({
+            const formattedData = jsonData.map((country) => ({
               code: country.name,
               name: country.code,
               states: country.states,
