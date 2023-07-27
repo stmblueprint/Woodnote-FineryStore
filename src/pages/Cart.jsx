@@ -12,9 +12,10 @@ import { db } from "../firebase/firebase";
 
 const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
   const { isEmpty, totalUniqueItems, items, updateItemQuantity, removeItem } = useCart();
+  const [ cartItems, setCartItems] = useState([]);
   const [email, setEmail] = useState("");
 
-  const subtotal = items.reduce((total, item) => Number(item.price) * Number(totalUniqueItems), 0);
+  const subtotal = cartItems.reduce((total, item) => Number(item.price) * Number(totalUniqueItems), 0);
 
   
   const toggleCart = () => {
@@ -31,6 +32,7 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
 
 
   // update total whenever it changes to display in another view
+  // update items in cart and add them to database
   useEffect(() => {
 
     // Function to update cart items in Firestore
@@ -51,23 +53,48 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
     const storedEmail = sessionStorage.getItem("email");
     const parsedEmail = JSON.parse(storedEmail);
     setEmail(parsedEmail);
-    setTotalItems(totalUniqueItems);
+    // setTotalItems(totalUniqueItems);
 
     if (items) {
       updateCartItemsInFirestore(items);
     }
   }, [totalUniqueItems, setTotalItems, items, cartId]);
 
+    // Fetch cart items from Firestore
+    useEffect(() => {
+      const fetchCartItems = async () => {
+        try {
+          const cartRef = doc(db, "Orders", cartId);
+          const cartSnapshot = await getDoc(cartRef);
   
+          if (cartSnapshot.exists()) {
+            const cartData = cartSnapshot.data();
+            // Assuming that the cart items are stored as an array in the 'items' field
+            setCartItems(cartData.items || []);
+           
+          }
+        } catch (error) {
+          console.error("Error fetching cart items from Firestore: ", error);
+        }
+      };
+  
+      if (cartId) {
+        fetchCartItems();
+      }
+    }, [cartId]);
+
+    useEffect(() => {
+      setTotalItems(cartItems.length)
+    }, [cartItems, setTotalItems])
 
   return (
     <>
-    {items.price}
+    {cartItems.price}
       {/* <button onClick={toggleCart}>Open Cart ({totalUniqueItems})</button> */}
       {isOpen  && (
         <div className="cart-popup">
           <div className="cart-header">
-            <h3>CART <span style={{opacity: "0.5"}}>{totalUniqueItems}</span></h3>
+            <h3>CART <span style={{opacity: "0.5"}}>{totalItems}</span></h3>
 
             <div className="button-style-3">
               <button onClick={toggleCart}>
@@ -77,7 +104,7 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
           </div>
           <hr />
           <div className="cart-items">
-            {items.map((item, index) => (
+            {cartItems.map((item, index) => (
               <div key={item.productId} className="cart-item">
                 <div className="cart-img">
                   <img src={item.image} alt={item.title} width={50} />
@@ -98,7 +125,7 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
                   </div>
                 </div>
 
-                {index !== items.length - 1 && <hr className="cart-item-divider" />} {/* Add horizontal line if not the last item */}
+                {index !== cartItems.length - 1 && <hr className="cart-item-divider" />} {/* Add horizontal line if not the last item */}
               </div>
             ))}
           </div>

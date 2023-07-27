@@ -105,6 +105,7 @@ const Header = () => {
 
                   <span className="color-indicator-1 count-position">
                     {totalItems > 0 ? `(${totalItems})` : ""}
+                    {}
                   </span>
               </div>
             </button>
