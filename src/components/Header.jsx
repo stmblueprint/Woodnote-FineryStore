@@ -72,7 +72,7 @@ const Header = () => {
         <>
         
         {/* Implement Hamburger Menu */}
-          <div className="child-1">
+          <div className="">
                 <CartPopup isOpen={isCartOpen} setIsOpen={setIsCartOpen} totalItems={totalItems} setTotalItems={setTotalItems}/>
           </div>
         <header className="header header-grid center">
