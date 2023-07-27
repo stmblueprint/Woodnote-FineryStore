@@ -18,7 +18,7 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
 
   
   const toggleCart = () => {
-    setIsOpen(true);
+    setIsOpen(!isOpen);
   };
 
   
