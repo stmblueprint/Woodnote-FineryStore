@@ -28,23 +28,28 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
     const cartId = parsedUserId;
   // ------------------------------------------------------------------------------
 
-// Function to update cart items in Firestore
-const updateCartItemsInFirestore = async (updatedItems) => {
-  try {
-    // Replace "your_cart_document_id" with the actual cart document ID in Firestore
-    const cartRef = doc(db, "Orders", cartId);
 
-    // Update the 'items' field in Firestore with the updatedItems array
-    await setDoc(cartRef, { items: updatedItems }, { merge: true });
-
-    console.log("Cart items updated in Firestore successfully!");
-  } catch (error) {
-    console.error("Error updating cart items in Firestore: ", error);
-  }
-};
 
   // update total whenever it changes to display in another view
   useEffect(() => {
+
+    // Function to update cart items in Firestore
+    const updateCartItemsInFirestore = async (updatedItems) => {
+      try {
+        // Replace "your_cart_document_id" with the actual cart document ID in Firestore
+        const cartRef = doc(db, "Orders", cartId);
+
+        // Update the 'items' field in Firestore with the updatedItems array
+        await setDoc(cartRef, { items: updatedItems }, { merge: true });
+
+        console.log("Cart items updated in Firestore successfully!");
+      } catch (error) {
+        console.error("Error updating cart items in Firestore: ", error);
+      }
+    };
+
+
+
     const storedEmail = sessionStorage.getItem("email");
     const parsedEmail = JSON.parse(storedEmail);
     setEmail(parsedEmail);
@@ -55,7 +60,7 @@ const updateCartItemsInFirestore = async (updatedItems) => {
     }
 
 
-  }, [totalUniqueItems, setTotalItems, items]);
+  }, [totalUniqueItems, setTotalItems, items, cartId]);
 
   
 
