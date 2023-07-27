@@ -22,13 +22,14 @@ const ProductDescription = ({ description, setDescription, currentId }) => {
                         to the touch.`)
     }
 
+    
 
     return(
 
         <div>
             <div style={{width: "30vw", margin: "10px"}}>
                 {description}
-                {currentId === "33017314" ? 
+                {currentId == "33017314" ? 
                     <ul>
                         <li>100% cotton face</li>
                         <li>65% cotton, 35% polyester</li>
@@ -41,7 +42,7 @@ const ProductDescription = ({ description, setDescription, currentId }) => {
                         <li>Tear-away label</li>
                     </ul> :  ""
                 }
-                {currentId === "50851839" ? 
+                {currentId == "50851839" ? 
                     <ul>
                         <li>85% organic ring-spun combed cotton, 15% recycled polyester</li>
                         <li>Fabric weight: 350 g/m² (10.3 oz/yd²)</li>
@@ -56,7 +57,7 @@ const ProductDescription = ({ description, setDescription, currentId }) => {
                         <li>The fabric of this product is OEKO-TEX Standard 100 certified and PETA-Approved Vegan</li>
                     </ul> :  ""
                 }
-                {currentId === "51065350" ? 
+                {currentId == "51065350" ? 
                     <ul>
                         <li>65% ring-spun cotton, 35% polyester&nbsp;</li>
                         <li>Charcoal Heather is 60% ring-spun cotton, 40% polyester</li>

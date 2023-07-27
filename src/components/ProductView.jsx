@@ -238,7 +238,8 @@ return(
                           <ProductDescription 
                                         description={description} 
                                         setDescription={setDescription} 
-                                        currentId = {productId}/>
+                                        currentId = {productId}
+                                        />
                           
                         </div>
                     </div>
