@@ -8,6 +8,7 @@ import Payment from "./Payment";
 
 const PaymentView = ({ totalItems, setTotalItems}) => {
   const { isEmpty, totalUniqueItems, items, updateItemQuantity, removeItem } = useCart();
+  const [ cartItems, setCartItems] = useState([]);
 
   const subtotal = items.reduce((total, item) => Number(item.price) * Number(totalUniqueItems), 0);
 
@@ -16,11 +17,14 @@ const PaymentView = ({ totalItems, setTotalItems}) => {
 
   },[subtotal])
 
+  // Fetch cart items from session storage when the component mounts
+  useEffect(() => {
+    const storedCartItems = sessionStorage.getItem("cartItems");
 
-
-
-
-  
+    if (storedCartItems) {
+      setCartItems(JSON.parse(storedCartItems));
+    }
+  }, []);
 
   
   return (
@@ -34,7 +38,7 @@ const PaymentView = ({ totalItems, setTotalItems}) => {
            
           </div>
           <div className="cart-items">
-            {items.map((item, index) => (
+            {cartItems.map((item, index) => (
               <div key={item.productId} className="cart-item">
                 <div className="cart-img">
                   <img src={item.image} alt={item.title} width={120} />

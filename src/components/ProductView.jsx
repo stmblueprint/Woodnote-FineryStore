@@ -9,6 +9,11 @@ import ProductDescription from "./ProductDescription";
 import { useCart } from "react-use-cart";
 import CartPopup from "../pages/Cart";
 
+
+import { doc, setDoc, updateDoc, arrayUnion, getDoc, arrayRemove } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+
+
 const ProductView = () => {
 
 const [productId, setProductId] = useState(null)
@@ -28,11 +33,14 @@ const [errorMsg, setErrorMsg] = useState(false);
   const storedUserUserId = sessionStorage.getItem("uid");
   const parsedUserId = JSON.parse(storedUserUserId);
   const cartId = parsedUserId;
+
 // ------------------------------------------------------------------------------
 
 // const  { addToCart }  = useCart();
+const [ cartItems, setCartItems] = useState([]);
 const { addItem } = useCart();
 const navigate = useNavigate();
+
 
  // useLocation for storing states doesnt work on the deployed server
   // const location = useLocation();
@@ -62,6 +70,9 @@ const handleColorClick = (selectedColor) => {
 const handleSizeClick = (selectedSize) => {
     setSelectedSize(selectedSize)
 }
+
+
+
 
 
 const handleAddToCart = () => {
@@ -139,9 +150,34 @@ const handleAddToCart = () => {
        }
         
       
-      if (colors !== null && size !== null && cartId !== null){ // add to cart if a color and size is selected
-        addItem(product);
-        setIsCartOpen(true);
+      if (selectedColor !== null && selectedSize !== null && cartId !== null){ // add to cart if a color and size is selected
+        // addItem(product);          
+        // setIsCartOpen(true);
+
+        // add items to the database 
+        const cartRef = doc(db, "Orders", cartId);
+        
+        updateDoc(cartRef, {
+          items: arrayUnion(product), // merge updated items
+        })
+          .then(() => {
+            console.log("Item added to cart in Firestore successfully!");
+
+             // Update the cartItems state with the new product
+              setCartItems((prevCartItems) => [...prevCartItems, product]);
+
+              // Update the cart items in the local storage
+              const updatedCartItems = [...cartItems, product];
+              sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+
+              // Reload the page to show the updated cart
+              window.location.reload();
+        
+            setIsCartOpen(true);
+          })
+          .catch((error) => {
+            console.error("Error adding item to cart in Firestore: ", error);
+          });
       }else{
         setErrorMsg(true) // show error message to prompt color and size selection
 
@@ -158,6 +194,8 @@ const handleAddToCart = () => {
 //     // Store the product object in sessionStorage when the component mounts
 //     sessionStorage.setItem('productData', JSON.stringify(product));
 //   }, []);
+
+
 
 
 

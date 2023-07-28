@@ -29,63 +29,98 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
     const cartId = parsedUserId;
   // ------------------------------------------------------------------------------
 
+  const removeItemFromCart = (itemId) => {
+    if (!cartId || !itemId) {
+      console.error("Invalid cartId or itemId.");
+      return;
+    }
+  
+    // Find the index of the item with the given itemId in the cartItems array
+    const itemIndex = cartItems.findIndex((item) => item.id === itemId);
+  
+    if (itemIndex === -1) {
+      console.error("Item not found in cartItems.");
+      return;
+    }
+  
+    // Remove the item from Firestore using arrayRemove with the specific index
+    const cartRef = doc(db, "Orders", cartId);
+    updateDoc(cartRef, {
+      items: arrayRemove(cartItems[itemIndex]),
+    })
+      .then(() => {
+        console.log("Item removed from cart in Firestore successfully!");
+        // Update the local state of cartItems to reflect the removal
+        setCartItems((prevCartItems) => prevCartItems.filter((item) => item.id !== itemId));
+  
+        // Update the cart items in the local storage
+        const updatedCartItems = cartItems.filter((item) => item.id !== itemId);
+        sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+      })
+      .catch((error) => {
+        console.error("Error removing item from cart in Firestore: ", error);
+      });
+  };
+  
+  
 
 
   // update total whenever it changes to display in another view
   // update items in cart and add them to database
+  // useEffect(() => {
+
+  //   // Function to update cart items in Firestore
+  //   const updateCartItemsInFirestore = async (updatedItems) => {
+  //     try {
+
+  //       const cartRef = doc(db, "Orders", cartId);
+
+  //       // Update the 'items' field in Firestore with the updatedItems array
+  //       await setDoc(cartRef, { items: updatedItems }, { merge: true });
+
+  //       console.log("Cart items updated in Firestore successfully!");
+  //     } catch (error) {
+  //       console.error("Error updating cart items in Firestore: ", error);
+  //     }
+  //   };
+
+  //     const storedEmail = sessionStorage.getItem("email");
+  //     const parsedEmail = JSON.parse(storedEmail);
+  //     setEmail(parsedEmail);
+
+  //     updateCartItemsInFirestore(cartItems);
+    
+  // }, [totalUniqueItems, setTotalItems, cartId, email, cartItems]);
+
+     // Fetch cart items from Firestore or sessionStorage
   useEffect(() => {
-
-    // Function to update cart items in Firestore
-    const updateCartItemsInFirestore = async (updatedItems) => {
+    const fetchCartItems = async () => {
       try {
-        // Replace "your_cart_document_id" with the actual cart document ID in Firestore
-        const cartRef = doc(db, "Orders", cartId);
-
-        // Update the 'items' field in Firestore with the updatedItems array
-        await setDoc(cartRef, { items: updatedItems }, { merge: true });
-
-        console.log("Cart items updated in Firestore successfully!");
-      } catch (error) {
-        console.error("Error updating cart items in Firestore: ", error);
-      }
-    };
-
-    const storedEmail = sessionStorage.getItem("email");
-    const parsedEmail = JSON.parse(storedEmail);
-    setEmail(parsedEmail);
-    // setTotalItems(totalUniqueItems);
-
-    if (items) {
-      updateCartItemsInFirestore(items);
-    }
-  }, [totalUniqueItems, setTotalItems, items, cartId]);
-
-    // Fetch cart items from Firestore
-    useEffect(() => {
-      const fetchCartItems = async () => {
-        try {
+        if (cartId) {
           const cartRef = doc(db, "Orders", cartId);
           const cartSnapshot = await getDoc(cartRef);
-  
+
           if (cartSnapshot.exists()) {
             const cartData = cartSnapshot.data();
             // Assuming that the cart items are stored as an array in the 'items' field
             setCartItems(cartData.items || []);
-           
           }
-        } catch (error) {
-          console.error("Error fetching cart items from Firestore: ", error);
+        } else {
+          // If cartId is not available, retrieve cartItems from sessionStorage
+          const storedCartItems = sessionStorage.getItem("cartItems");
+          setCartItems(JSON.parse(storedCartItems) || []);
         }
-      };
-  
-      if (cartId) {
-        fetchCartItems();
+      } catch (error) {
+        console.error("Error fetching cart items from Firestore: ", error);
       }
-    }, [cartId]);
+    };
+
+    fetchCartItems();
+  }, [cartId]);
 
     useEffect(() => {
       setTotalItems(cartItems.length)
-    }, [cartItems, setTotalItems])
+    }, [cartItems, setTotalItems]);
 
   return (
     <>
@@ -109,11 +144,11 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
                 <div className="cart-img">
                   <img src={item.image} alt={item.title} width={50} />
                 </div>
-
                 <div className="cart-product-info">
                   <button className="button-style-1 color-indicator-1" 
                           style={{position: "absolute", left: "25%"}}
-                          onClick={() => removeItem(item.id)}>
+                          
+                          onClick={() => removeItemFromCart(item.id)}>
                             <FontAwesomeIcon icon={faX}></FontAwesomeIcon>
                   </button>
                   <div style={{fontWeight: "bold"}}>{item.name}</div>
@@ -138,7 +173,7 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
             
             <div className="button-style-2 center"style={{marginTop: "bold"}}>
                <button className="button-style-1">
-               {email ? (
+               {cartId ? (
                   <Link to={"/shipping"} style={{ color: "white" }}>
                     Checkout
                   </Link>) : (<Link to={"/account"} style={{ color: "white" }}>Checkout</Link>
