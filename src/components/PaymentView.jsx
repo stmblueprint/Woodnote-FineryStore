@@ -6,25 +6,55 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Payment from "./Payment";
 
+import { doc, setDoc, updateDoc, arrayUnion, getDoc, arrayRemove } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+
+
+
 const PaymentView = ({ totalItems, setTotalItems}) => {
   const { isEmpty, totalUniqueItems, items, updateItemQuantity, removeItem } = useCart();
   const [ cartItems, setCartItems] = useState([]);
+  const [subtotal, setSubtotal] = useState(0);
 
-  const subtotal = items.reduce((total, item) => Number(item.price) * Number(totalUniqueItems), 0);
+  // const subtotal = items.reduce((total, item) => Number(item.price) * Number(totalUniqueItems), 0);
 
-  useEffect(()=> {
-    sessionStorage.setItem("subtotal", JSON.stringify(subtotal));
 
-  },[subtotal])
+    // ------------------------------------------------------------------------------
+    const storedUserUserId = sessionStorage.getItem("uid");
+    const parsedUserId = JSON.parse(storedUserUserId);
+    const cartId = parsedUserId;
 
-  // Fetch cart items from session storage when the component mounts
-  useEffect(() => {
-    const storedCartItems = sessionStorage.getItem("cartItems");
+  // ------------------------------------------------------------------------------
 
-    if (storedCartItems) {
-      setCartItems(JSON.parse(storedCartItems));
+
+
+
+useEffect(() => {
+  const fetchCartItems = async () => {
+    try {
+      const cartRef = doc(db, "Orders", cartId);
+      const cartSnapshot = await getDoc(cartRef);
+
+      if (cartSnapshot.exists()) {
+        const cartData = cartSnapshot.data();
+        // Assuming that the cart items are stored as an array in the 'items' field
+        setCartItems(cartData.items || []);
+      }
+    } catch (error) {
+      console.error("Error fetching cart items from Firestore: ", error);
     }
-  }, []);
+  };
+
+  if (cartId) {
+    fetchCartItems();
+  }
+}, [cartId]);
+
+useEffect(() => {
+  const calculatedSubtotal = items.reduce((total, item) => Number(item.price) * cartItems.length, 0);
+  setSubtotal(calculatedSubtotal);
+}, [cartItems.length, items]);
+
 
   
   return (
@@ -73,12 +103,12 @@ const PaymentView = ({ totalItems, setTotalItems}) => {
 
             <div className="subtotal" style={{fontWeight: "bold"}}>
               <span>Subtotal</span>
-              <span className="center">${subtotal.toFixed(2)}</span>
+              <span className="center">${subtotal}</span>
             </div>
             <hr/>
             <div className="subtotal" style={{fontWeight: "bold"}}>
                 <span>Total</span>
-                <span className="center">${subtotal.toFixed(2)}</span>
+                <span className="center">${subtotal}</span>
             </div>
 
           </div>

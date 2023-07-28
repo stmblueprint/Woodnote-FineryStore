@@ -15,8 +15,13 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
   const [ cartItems, setCartItems] = useState([]);
   const [email, setEmail] = useState("");
 
-  const subtotal = cartItems.reduce((total, item) => Number(item.price) * Number(totalUniqueItems), 0);
+  const subtotal = cartItems.reduce((total, item) => Number(item.price) * Number(totalItems), 0);
 
+  useEffect(() => {
+  
+    sessionStorage.setItem("subtotal", JSON.stringify(subtotal));
+
+  }, [subtotal])
   
   const toggleCart = () => {
     setIsOpen(!isOpen);

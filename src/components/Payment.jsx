@@ -11,6 +11,7 @@ import { db } from "../firebase/firebase"
 
 
 const amount = JSON.parse(sessionStorage.getItem("subtotal"));
+
 const style = {"layout": "vertical"};
 
  const Payment = ({currency, showSpinner}) => {
