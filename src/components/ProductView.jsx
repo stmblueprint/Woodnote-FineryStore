@@ -225,7 +225,7 @@ return(
                             <img
                                 src={image}
                                 alt="Mockup"
-                                width={300}
+                                style={{width: "40vw"}}
                             />
                         </div>
                         <br/>

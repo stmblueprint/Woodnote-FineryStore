@@ -157,6 +157,7 @@ const Variants = ({ setImage, image }) => {
                     <div className="">
                       {product.files.map((variant) => (
                         <img
+                          className="variant-style"
                           key={variant.id}
                           onClick={() =>
                             handleSelectedProduct(variant.preview_url)
@@ -190,7 +191,7 @@ const Variants = ({ setImage, image }) => {
               })}
             </div>
           ) : (
-            <p>Loading products...</p>
+            <p>Loading variants...</p>
           )}
         </div>
       </div>
