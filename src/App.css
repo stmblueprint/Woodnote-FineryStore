@@ -371,8 +371,8 @@ a{
   margin-left: 25px;
 }
 .button-style-2{
-  background-color: #000000;
-  /* background-color: rgb(3, 185, 18); */
+  /* background-color: #000000; */
+  background-color: rgb(3, 185, 18);
   padding: 10px 20px;
   font-size: 16px;
   border-radius: 4px;
