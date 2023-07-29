@@ -103,12 +103,12 @@ useEffect(() => {
 
             <div className="subtotal" style={{fontWeight: "bold"}}>
               <span>Subtotal</span>
-              <span className="center">${subtotal}</span>
+              <span className="center">${subtotal.toFixed(2)}</span>
             </div>
             <hr/>
             <div className="subtotal" style={{fontWeight: "bold"}}>
                 <span>Total</span>
-                <span className="center">${subtotal}</span>
+                <span className="center">${subtotal.toFixed(2)}</span>
             </div>
 
           </div>
