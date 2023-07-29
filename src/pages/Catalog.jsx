@@ -103,7 +103,7 @@ const Catalog = () => {
                          //  appending the index to the product.id within the key prop, 
                   // you ensure that each key is unique and address the warning
                   //  about non-unique keys.
-                        <div  key={`${product.id}-${index}`} onClick={() => handleProductClick(
+                        <div className="product" key={`${product.id}-${index}`} onClick={() => handleProductClick(
                                      product.id, 
                                      product.title, 
                                      product.mockup_file_url, 
@@ -122,13 +122,13 @@ const Catalog = () => {
                                     height={300}
                                     />
                         </div>
-                        <div className="center">
-                         <h3>{product.title}</h3>
+                        <div className="center product-title">
+                         {product.title}
                         </div>
 
                            {/* since there's an array of colors, use map to find
                                 get all of them */}
-                           <div>
+                           <div className="product-info-container">
                             <div className="price center">
                                ${price}
                             </div>

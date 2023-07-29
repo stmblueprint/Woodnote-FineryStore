@@ -92,9 +92,9 @@ const Header = () => {
             <span>
             <Link to={"/catalog"}>Catalog</Link>
             </span>
-            <span>
+            {/* <span>
               Contact
-            </span>
+            </span> */}
 
             <span className='cart'>
 

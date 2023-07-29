@@ -8,6 +8,9 @@ import displayProduct2 from "../assets/grey_sweat.png"
 import { Link } from "react-router-dom";
 
 
+import { doc, setDoc, updateDoc, arrayUnion, getDoc, arrayRemove } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+
 
 
 const Body = () => {
@@ -44,21 +47,24 @@ const Body = () => {
 
 
               {/* mid */}
+              <Link to={"/catalog"} className="homepage-mid-section-container">
               <section className="homepage-mid-section-container center">
-                <div>
-                        <div className="heading-1 center">
-                            CATEGORIES
+                <div className="home-grid-style-1 center">
+
+                        <div className="home-grid-positioning-1 heading-1">
+                            Explore Now With Our<br/>
+                            Collection
                         </div>
 
 
-                        <div className="categories-grid center">
-                            <span>
+                        <div className="home-grid-positioning-2 center">
+                            <div>
                               <img src={displayProduct2} width={300}/>
-                            </span>
+                            </div>
 
-                            <span>
+                            <div>
                               <img src={displayProduct3} width={300}/>
-                            </span>
+                            </div>
                         </div>
                        
                 
@@ -66,6 +72,7 @@ const Body = () => {
                    
                 </div>
              </section>
+             </Link>
 
 
 
@@ -82,9 +89,9 @@ const Body = () => {
                           receive email updates on our newest products <br/>and designs.
                         </div>
 
-                        <div>
+                        <div className="subscription-section">
                             <input type="email" name="email" placeholder="Enter your email here"/>
-                            <button>SUBSCRIBE</button>
+                            <button className="subscription-button">SUBSCRIBE</button>
                         </div>
                 </div>
              </section>
@@ -108,9 +115,6 @@ const Home = () => {
         <div className="home-container">
             <Header/>
             <Body/>
-
-            
-            
             <Footer/>
         </div>
         </>
