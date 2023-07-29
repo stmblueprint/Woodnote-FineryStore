@@ -57,6 +57,9 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
         console.log("Item removed from cart in Firestore successfully!");
         // Update the local state of cartItems to reflect the removal
         setCartItems((prevCartItems) => prevCartItems.filter((item) => item.id !== itemId));
+        
+         // Reload the page to show the updated cart
+         window.location.reload();
   
         // Update the cart items in the local storage
         const updatedCartItems = cartItems.filter((item) => item.id !== itemId);

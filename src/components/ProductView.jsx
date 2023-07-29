@@ -29,6 +29,9 @@ const [isCartOpen, setIsCartOpen] = useState(false);
 const [description, setDescription] = useState(null);
 const [errorMsg, setErrorMsg] = useState(false);
 
+const [selectedColorIndex, setSelectedColorIndex] = useState(null);
+const [selectedSizeIndex, setSelectedSizeIndex] = useState(null);
+
   // ------------------------------------------------------------------------------
   const storedUserUserId = sessionStorage.getItem("uid");
   const parsedUserId = JSON.parse(storedUserUserId);
@@ -64,11 +67,13 @@ const navigate = useNavigate();
   }
 }, []);
 
-const handleColorClick = (selectedColor) => {
+const handleColorClick = (selectedColor, index) => {
     setSelectedColor(selectedColor)
+    setSelectedColorIndex(index)
 }
-const handleSizeClick = (selectedSize) => {
+const handleSizeClick = (selectedSize, index) => {
     setSelectedSize(selectedSize)
+    setSelectedSizeIndex(index)
 }
 
 
@@ -238,24 +243,24 @@ return(
                          <h3>Color: {selectedColor}</h3>
                         
                          <div className="color-container">
-                         {colors.map((color) => (
-                                    <span className="color-style" key={productId} 
-                                        onClick={() => handleColorClick(color.color_name)} 
+                         {colors.map((color, index) => (
+                                    <span className= {`color-style ${selectedColorIndex === index ? "selected" : ""}`}
+                                        key={productId} 
+                                        onClick={() => handleColorClick(color.color_name, index)} 
                                         style={{background: `${color.color_codes}`,
                                         width: '30px',
                                         height: '30px',
                                         borderRadius: '50%',
                                         margin: '5px'}}>
-
                                     </span>
                                 ))}
                         </div>
                         <h3>Size: {selectedSize}</h3>
                         <div className="size-container">
                                     {size && size.map((size, index) => (
-                                        <span className="size-option" 
+                                        <span className= {`size-option ${selectedSizeIndex === index ? "selected" : ""}`}
                                               key={index}
-                                              onClick={() => handleSizeClick(size)} >
+                                              onClick={() => handleSizeClick(size, index)} >
                                             {size}
                                         </span>
                                     ))}
