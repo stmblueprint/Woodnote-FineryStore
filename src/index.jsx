@@ -51,15 +51,13 @@ function App() {
         sessionStorage.setItem('clientId', clientId);
       } else {
         console.error('No PayPal client ID found in Firestore. Please ensure the "payPalClientId" field is set.');
-        // Set a default client ID here if required
-        // setClientId('YOUR_DEFAULT_CLIENT_ID');
+       
       }
 
       setLoading(false);
     } catch (error) {
       console.error('Error fetching PayPal client ID:', error);
-      // Set a default client ID here if required
-      // setClientId('YOUR_DEFAULT_CLIENT_ID');
+      
       setLoading(false);
     }
   };

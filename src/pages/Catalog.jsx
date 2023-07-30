@@ -100,9 +100,9 @@ const Catalog = () => {
                 {data ? (
                     <div className="product-container center">
                     {data.map((product, index) => (
-                         //  appending the index to the product.id within the key prop, 
-                  // you ensure that each key is unique and address the warning
-                  //  about non-unique keys.
+                           //  appending the index to the product.id within the key prop, 
+                           // you ensure that each key is unique and address the warning
+                           //  about non-unique keys.
                         <div className="product" key={`${product.id}-${index}`} onClick={() => handleProductClick(
                                      product.id, 
                                      product.title, 
