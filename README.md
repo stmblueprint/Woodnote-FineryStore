@@ -4,5 +4,5 @@
 
 ### Amazon Web Services: AWS API Gateway, Lambda, S3, Amplify
 ### Database: Firebase Auth, Firestore
-### Language|Framework|Libraries: Javascript, Reactjs, Nodejs, Axios, HTML, CSS, Font Awesome
-### API|SDK: Printful API, Paypal SDK
+### Language | Framework | Libraries: Javascript, Reactjs, Nodejs, Axios, HTML, CSS, Font Awesome
+### API | SDK: Paypal SDK, Printful APIs(Countries, states, shipping, products, templates, variants)
