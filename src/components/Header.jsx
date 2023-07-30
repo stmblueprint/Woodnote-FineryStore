@@ -89,7 +89,7 @@ const Header = () => {
 
             <div className='nav-links header center'>
 
-              <div className='main-links'>
+              <div className='main-links center'>
                   <span>
                     <Link to={"/"}>Home</Link>
                   </span>
@@ -102,7 +102,7 @@ const Header = () => {
               <span className='cart'>
 
                 <span className=''>
-                <button className="button-style-1" onClick={() => handleCartToggle()}>
+                <button className="button-style-1" style={{color: "black"}} onClick={() => handleCartToggle()}>
                   <div style={{ position: "relative" }}>
                       <FontAwesomeIcon icon={faShoppingCart} className="icon" />
 
@@ -119,7 +119,7 @@ const Header = () => {
                   <Link to={"/account"}><FontAwesomeIcon icon={faUser} className='icon'/></Link>
 
                   {email !== null && (
-                    <button onClick={userSignOut} className="button-style-1">
+                    <button onClick={userSignOut} className="button-style-1" style={{color: "black"}}>
                       <FontAwesomeIcon icon={faArrowRightFromBracket} className="icon " />
                     </button>
                   )} 
