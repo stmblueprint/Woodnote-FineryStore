@@ -32,7 +32,7 @@ const Footer = () => {
         </div>
 
         <div className="copyright-label center">
-          Copyright © 2023 WoodNote Finery | All Rights Reserved
+          Copyright © 2023 WoodNote Finery | All Rights Reserved.
         </div>
       </footer>
     </>
