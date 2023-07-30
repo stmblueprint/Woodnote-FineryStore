@@ -29,31 +29,14 @@ const PaymentView = ({ totalItems, setTotalItems}) => {
 
 
 
-   // Fetch cart items from Firestore or sessionStorage
-   useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        if (cartId) {
-          const cartRef = doc(db, "Orders", cartId);
-          const cartSnapshot = await getDoc(cartRef);
-
-          if (cartSnapshot.exists()) {
-            const cartData = cartSnapshot.data();
-            // Assuming that the cart items are stored as an array in the 'items' field
-            setCartItems(cartData.items || []);
-          }
-        } else {
-          // If cartId is not available, retrieve cartItems from sessionStorage
-          const storedCartItems = sessionStorage.getItem("cartItems");
-          setCartItems(JSON.parse(storedCartItems) || []);
-        }
-      } catch (error) {
-        console.error("Error fetching cart items from Firestore: ", error);
-      }
-    };
-
-    fetchCartItems();
+  useEffect(() => {
+    // Retrieve cartItems from sessionStorage
+    if(cartId){
+      const storedCartItems = sessionStorage.getItem("cartItems");
+      setCartItems(JSON.parse(storedCartItems) || []);
+    }
   }, [cartId]);
+
 
 useEffect(() => {
   const calculatedSubtotal = items.reduce((total, item) => Number(item.price) * cartItems.length, 0);

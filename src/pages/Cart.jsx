@@ -126,6 +126,10 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
     fetchCartItems();
   }, [cartId]);
 
+  useEffect(() => {
+    sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
     useEffect(() => {
       setTotalItems(cartItems.length)
     }, [cartItems, setTotalItems]);
