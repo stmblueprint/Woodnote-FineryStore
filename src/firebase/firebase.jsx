@@ -12,15 +12,14 @@ import { useEffect, useState } from "react";
 
 
 const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
-  };
-  
+    apiKey: "AIzaSyDJgQmMCW-69RKJgD0JWR0hBK_zH8prxAs",
+    authDomain: "woodnote-finery-d8cdd.firebaseapp.com",
+    projectId: "woodnote-finery-d8cdd",
+    storageBucket: "woodnote-finery-d8cdd.appspot.com",
+    messagingSenderId: "512478761585",
+    appId: "1:512478761585:web:74be33e0c6919a261ec1d0",
+    measurementId: "G-6MTZ1Z42S8"
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
