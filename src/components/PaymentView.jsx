@@ -8,38 +8,94 @@ import Payment from "./Payment";
 
 import { doc, setDoc, updateDoc, arrayUnion, getDoc, arrayRemove } from "firebase/firestore";
 import { db } from "../firebase/firebase";
-
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
+import { auth } from "../firebase/firebase";
 
 
 const PaymentView = ({ totalItems, setTotalItems}) => {
-  const { isEmpty, totalUniqueItems, items, updateItemQuantity, removeItem } = useCart();
+  // const { isEmpty, totalUniqueItems, items, updateItemQuantity, removeItem } = useCart();
+
   const [ cartItems, setCartItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
+  const [email, setEmail] = useState("")
+  const [userId, setUserId] = useState(null);
 
   // const subtotal = items.reduce((total, item) => Number(item.price) * Number(totalUniqueItems), 0);
 
 
     // ------------------------------------------------------------------------------
-    const storedUserUserId = sessionStorage.getItem("uid");
-    const parsedUserId = JSON.parse(storedUserUserId);
-    const cartId = parsedUserId;
+
+    useEffect(() => {
+      const listen = onAuthStateChanged(auth, async (user) => {
+        
+        if (user) {
+  
+            const docRef = doc(db, "User", user.uid);
+            const docSnapshot = await getDoc(docRef);
+           
+          if (docSnapshot.exists()) {
+            const data = docSnapshot.data();
+            console.log(data.email)
+            console.log(data.id)
+
+            sessionStorage.setItem("email", JSON.stringify(data.email));
+            localStorage.setItem("uid", JSON.stringify(data.id));
+
+            setEmail(JSON.parse(sessionStorage.getItem("email")));
+            setUserId(JSON.parse(localStorage.getItem("uid")));
+  
+          }
+  
+        } 
+        
+      });
+      return () => {
+
+        listen();
+      };
+    }, []);
+
+    // const storedUserUserId = localStorage.getItem("uid");
+    // const parsedUserId = JSON.parse(storedUserUserId);
+    // const cartId = parsedUserId;
 
   // ------------------------------------------------------------------------------
 
 
 
 
-  // Load cart items from local storage on initial mount
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem("cartItems");
-    setCartItems(JSON.parse(storedCartItems) || []);
-  }, []);
+   // Fetch cart items from Firestore or sessionStorage
+   useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        if (userId) {
+          const cartRef = doc(db, "Orders", userId);
+          const cartSnapshot = await getDoc(cartRef);
 
+          if (cartSnapshot.exists()) {
+            const cartData = cartSnapshot.data();
+            // Assuming that the cart items are stored as an array in the 'items' field
+            setCartItems(cartData.items || []);
+          }
+        } 
+       
+      } catch (error) {
+        console.error("Error fetching cart items from Firestore: ", error);
+      }
+    };
+
+    fetchCartItems();
+  }, [userId]);
 
 useEffect(() => {
-  const calculatedSubtotal = items.reduce((total, item) => Number(item.price) * cartItems.length, 0);
+  const calculatedSubtotal = cartItems.reduce((total, item) => Number(item.price) * cartItems.length, 0);
   setSubtotal(calculatedSubtotal);
-}, [cartItems.length, items]);
+}, [cartItems, cartItems.length]);
 
 
   
@@ -70,7 +126,7 @@ useEffect(() => {
                   </div>
                 </div>
 
-                {index !== items.length - 1 && <hr className="cart-item-divider" />} {/* Add horizontal line if not the last item */}
+                {index !== cartItems.length - 1 && <hr className="cart-item-divider" />} {/* Add horizontal line if not the last item */}
               </div>
             ))}
           </div>

@@ -8,12 +8,21 @@ import { Link } from "react-router-dom";
 import { doc, setDoc, updateDoc, arrayUnion, getDoc, arrayRemove } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
-
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
+import { auth } from "../firebase/firebase";
 
 const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
-  const { isEmpty, totalUniqueItems, items, updateItemQuantity, removeItem } = useCart();
+  // const { isEmpty, totalUniqueItems, items, updateItemQuantity, removeItem } = useCart();
+
   const [ cartItems, setCartItems] = useState([]);
   const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState(null);
+
 
   const subtotal = cartItems.reduce((total, item) => Number(item.price) * Number(totalItems), 0);
 
@@ -29,13 +38,46 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
 
   
   // ------------------------------------------------------------------------------
-    const storedUserUserId = sessionStorage.getItem("uid");
-    const parsedUserId = JSON.parse(storedUserUserId);
-    const cartId = parsedUserId;
+
+
+
+  useEffect(() => {
+    const listen = onAuthStateChanged(auth, async (user) => {
+      
+      if (user) {
+
+          const docRef = doc(db, "User", user.uid);
+          const docSnapshot = await getDoc(docRef);
+         
+        if (docSnapshot.exists()) {
+          const data = docSnapshot.data();
+          console.log(data.email)
+          console.log(data.id)
+
+          sessionStorage.setItem("email", JSON.stringify(data.email));
+          localStorage.setItem("uid", JSON.stringify(data.id));
+
+          setEmail(JSON.parse(sessionStorage.getItem("email")));
+          setUserId(JSON.parse(localStorage.getItem("uid")));
+
+        }
+
+      } 
+      
+    });
+    return () => {
+
+      listen();
+    };
+  }, []);
+
+    // const storedUserUserId = localStorage.getItem("uid");
+    // const parsedUserId = JSON.parse(storedUserUserId);
+    // const cartId = parsedUserId;
   // ------------------------------------------------------------------------------
 
   const removeItemFromCart = (itemId) => {
-    if (!cartId || !itemId) {
+    if (!userId || !itemId) {
       console.error("Invalid cartId or itemId.");
       return;
     }
@@ -49,7 +91,7 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
     }
   
     // Remove the item from Firestore using arrayRemove with the specific index
-    const cartRef = doc(db, "Orders", cartId);
+    const cartRef = doc(db, "Orders", userId);
     updateDoc(cartRef, {
       items: arrayRemove(cartItems[itemIndex]),
     })
@@ -104,27 +146,25 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        if (cartId) {
-          const cartRef = doc(db, "Orders", cartId);
+        if (userId) {
+          const cartRef = doc(db, "Orders", userId);
           const cartSnapshot = await getDoc(cartRef);
 
           if (cartSnapshot.exists()) {
             const cartData = cartSnapshot.data();
             // Assuming that the cart items are stored as an array in the 'items' field
             setCartItems(cartData.items || []);
+            
           }
-        } else {
-          // If cartId is not available, retrieve cartItems from sessionStorage
-          const storedCartItems = localStorage.getItem("cartItems");
-          setCartItems(JSON.parse(storedCartItems) || []);
-        }
+        } 
+  
       } catch (error) {
         console.error("Error fetching cart items from Firestore: ", error);
       }
     };
 
     fetchCartItems();
-  }, [cartId]);
+  }, [userId]);
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -138,6 +178,7 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
 
   return (
     <>
+    
     {cartItems.price}
       {/* <button onClick={toggleCart}>Open Cart ({totalUniqueItems})</button> */}
       {isOpen  && (

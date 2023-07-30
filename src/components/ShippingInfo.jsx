@@ -4,7 +4,7 @@ import Footer from "./Footer"
 import { useNavigate } from "react-router"
 import { GetCountryList, GetStateList } from "./Orders"
 
-import { collection, getDocs, getDoc, doc, documentId, addDoc, where, setDoc, query } from "firebase/firestore";
+import { collection, getDocs, getDoc, doc, documentId, addDoc, where, setDoc, query, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase"
 
 
@@ -78,85 +78,91 @@ const ShippingInfo = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // prevent the page from refreshing and erasing form information
-
+        e.preventDefault();
+      
         try {
-            const isValid = await validateForm();
-            // setName(`${firstname} ${lastname}`);
-
-            console.log("isValid:", 
-                         name,
-                         email,
-                         address1, 
-                         address2, 
-                         city, 
-                         countryName, 
-                         stateName, 
-                         zip, 
-                         phone); // Log values
-
-
-            if (isValid) {
-                setToPayment(true); // navigate to payment
-
-                    try {
-                      const docRef = await setDoc(doc(db, "Orders", userId), { // save user information until checkout
-                        name: name,
-                        email: email,
-                        address1: address1,
-                        address2: address2,
-                        countryName: countryName,
-                        countryCode: countryCode,
-                        stateName: stateName,
-                        stateCode: stateCode,
-                        city: city,
-                        zip: zip,
-                        phone: phone
-                       
-                      });
-                
-                      console.log("Document written with ID: ", docRef.id);
-                
-                    } catch (event) {
-                       console.error("Error adding document: ", event);
-                    }
-                  
-                console.log('success!')
-                navigate(toPayment ? '/payment' : '/shipping') // navigate to payment if all fields are filled in
-
-            } else {
-              console.log("Please fill out all the required fields.");
+          const isValid = await validateForm();
+      
+          if (isValid) {
+            setToPayment(true);
+      
+            try {
+              const userRef = doc(db, "Orders", userId);
+              const userSnapshot = await getDoc(userRef);
+      
+              if (userSnapshot.exists()) {
+                // Update the existing document
+                await updateDoc(userRef, {
+                  name: name,
+                  email: email,
+                  address1: address1,
+                  address2: address2,
+                  countryName: countryName,
+                  countryCode: countryCode,
+                  stateName: stateName,
+                  stateCode: stateCode,
+                  city: city,
+                  zip: zip,
+                  phone: phone,
+                });
+              } else {
+                // Create a new document
+                await setDoc(userRef, {
+                  name: name,
+                  email: email,
+                  address1: address1,
+                  address2: address2,
+                  countryName: countryName,
+                  countryCode: countryCode,
+                  stateName: stateName,
+                  stateCode: stateCode,
+                  city: city,
+                  zip: zip,
+                  phone: phone,
+                });
+              }
+      
+              console.log("Document written with ID: ", userRef.id);
+            } catch (event) {
+              console.error("Error adding/updating document: ", event);
             }
-
+      
+            console.log("success!");
+            navigate(toPayment ? "/payment" : "/shipping");
+          } else {
+            console.log("Please fill out all the required fields.");
+          }
         } catch (error) {
-            console.log("An error occurred during form validation:", error);
+          console.log("An error occurred during form validation:", error);
         }
-    }
+      };
 
-    // fill in fields for return customers
+    // fetch a single doc and fill in its information
     useEffect(() => {
         const fetchInformation = async () => {
           try {
-            const querySnapshot = await getDocs(
-              query(collection(db, "Orders"), where("email", "==", email))
-            );
+            if (userId) {
+              const userRef = doc(db, "Orders", userId);
+              const userSnapshot = await getDoc(userRef);
       
-            if (querySnapshot.docs.length > 0) {
-              const documentData = querySnapshot.docs[0].data();
-              setName(documentData.name);
-              setAddress1(documentData.address1)
-              setAddress2(documentData.address2)
-              setCity(documentData.city)
-              setZip(documentData.zip)
-              setPhone(documentData.phone)
+              if (userSnapshot.exists()) {
+                const userData = userSnapshot.data();
+                setName(userData.name);
+                setAddress1(userData.address1);
+                setAddress2(userData.address2);
+                setCity(userData.city);
+                setZip(userData.zip);
+                setPhone(userData.phone);
+              }
             }
           } catch (error) {
             console.error("Error fetching information: ", error);
           }
         };
       
-        fetchInformation(); 
-    }, [email]); // the dependency array
+        fetchInformation();
+      }, [userId]);
+      
       
      return(
         <>
@@ -325,11 +331,12 @@ const ShippingInfo = () => {
                 </div>
                 
              
-                <div className="center">
-                    <button type="submit" className="button-style-2 center"  style={{color:"white", textDecoration: "none"}}>
-                        Continue
-                    </button>
-                </div>
+                <button type="submit" className="button-style-2 center"  style={{color:"white", textDecoration: "none"}}>
+                    <div className="center">
+                            Continue
+                    </div>
+                </button>
+
 
             </form>
         </div>
@@ -340,4 +347,4 @@ const ShippingInfo = () => {
     )
 
 }
-export default ShippingInfo
+export default ShippingInfo;

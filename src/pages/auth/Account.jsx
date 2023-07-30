@@ -265,10 +265,10 @@ export const AuthViewManager = () => {
             console.log(data.id)
 
             sessionStorage.setItem("email", JSON.stringify(data.email));
-            sessionStorage.setItem("uid", JSON.stringify(data.id));
+            localStorage.setItem("uid", JSON.stringify(data.id));
 
             setEmail(JSON.parse(sessionStorage.getItem("email")));
-            setUserId(JSON.parse(sessionStorage.getItem("uid")));
+            setUserId(JSON.parse(localStorage.getItem("uid")));
   
           }
   
