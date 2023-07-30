@@ -399,7 +399,7 @@ a{
   padding: 10px;
 }
 .cart-footer{
-  margin-left: 25px;
+  /* margin-left: 25px; */
 }
 .button-style-2{
   /* background-color: #000000; */
@@ -474,6 +474,9 @@ a{
   border-top: 1px solid #ccc;
   grid-column: 1 / span 2; /* Stretch across both columns */
   margin: 10px 0;
+}
+.cart-footer{
+ 
 }
 .cart-footer > .subtotal{
  padding-bottom: 10px;
@@ -616,7 +619,11 @@ form > div{
   background-color: antiquewhite;
   border-radius: 2%;
 }
-
+.price-grid{
+  display: grid;
+  grid-template-columns: auto auto;
+  
+}
 .homepage-bottom-section-container {
   background-color: antiquewhite;
   padding: 50px;

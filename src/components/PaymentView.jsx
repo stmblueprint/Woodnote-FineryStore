@@ -132,26 +132,34 @@ useEffect(() => {
           </div>
 
           <div className="cart-footer">
+
          
-            <div className="" style={{fontWeight: "bold"}}>
-              <span>Shipping</span>
-              <span className="center">${'0.00'}</span>
+         
+            <div className="price-grid" style={{fontWeight: "bold"}}>
+              <span style={{width: "20px"}}>Shipping </span>
+              <span className="center" style={{width: "20px"}}>Free</span>
             </div>
+            <br/>
 
-            <div className="" style={{fontWeight: "bold"}}>
-              <span>Taxes</span>
-              <span className="center">${'0.00'}</span>
+            <div className="price-grid" style={{fontWeight: "bold"}}>
+              <span style={{width: "20px"}}>Taxes</span>
+              <span className="center" style={{width: "20px"}}>${'0.00'}</span>
             </div>
+            <br/>
 
-            <div className="subtotal" style={{fontWeight: "bold"}}>
-              <span>Subtotal</span>
-              <span className="center">${subtotal.toFixed(2)}</span>
+            <div className="price-grid"  style={{fontWeight: "bold"}}>
+              <span style={{width: "20px"}}>Subtotal</span>
+              <span className="center" style={{width: "20px"}}>${subtotal.toFixed(2)}</span>
             </div>
+            <br/>
+
             <hr/>
-            <div className="subtotal" style={{fontWeight: "bold"}}>
-                <span>Total</span>
-                <span className="center">${subtotal.toFixed(2)}</span>
+            <br/>
+            <div className="price-grid"  style={{fontWeight: "bold"}}>
+                <span style={{width: "20px"}}>Total</span>
+                <span className="center" style={{width: "20px"}}>${subtotal.toFixed(2)}</span>
             </div>
+            
 
           </div>
         </div>
