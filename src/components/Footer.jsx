@@ -12,7 +12,7 @@ const Footer = () => {
           <table>
             <tr className="footer-tb-rows">
               <th>Socials</th>
-              <th>About</th>
+              {/* <th>About</th> */}
               <th>Resources</th>
             </tr>
             <tr>
