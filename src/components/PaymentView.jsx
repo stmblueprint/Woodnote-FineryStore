@@ -29,13 +29,11 @@ const PaymentView = ({ totalItems, setTotalItems}) => {
 
 
 
+  // Load cart items from local storage on initial mount
   useEffect(() => {
-    // Retrieve cartItems from sessionStorage
-    if(cartId){
-      const storedCartItems = sessionStorage.getItem("cartItems");
-      setCartItems(JSON.parse(storedCartItems) || []);
-    }
-  }, [cartId]);
+    const storedCartItems = localStorage.getItem("cartItems");
+    setCartItems(JSON.parse(storedCartItems) || []);
+  }, []);
 
 
 useEffect(() => {

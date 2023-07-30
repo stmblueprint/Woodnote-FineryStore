@@ -115,7 +115,7 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
           }
         } else {
           // If cartId is not available, retrieve cartItems from sessionStorage
-          const storedCartItems = sessionStorage.getItem("cartItems");
+          const storedCartItems = localStorage.getItem("cartItems");
           setCartItems(JSON.parse(storedCartItems) || []);
         }
       } catch (error) {
@@ -127,7 +127,7 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
   }, [cartId]);
 
   useEffect(() => {
-    sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
     useEffect(() => {
