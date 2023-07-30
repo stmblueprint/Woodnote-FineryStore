@@ -71,60 +71,65 @@ const Header = () => {
     return(
         <>
         
-        {/* Implement Hamburger Menu */}
           <div className="child-1">
                 <CartPopup isOpen={isCartOpen} setIsOpen={setIsCartOpen} totalItems={totalItems} setTotalItems={setTotalItems}/>
           </div>
-        <header className="header header-grid center">
 
-         
+          
+          <div className='center header-logo'>
+            <span className='logo'>
+              <Link to={'/'}>
+                <img src={logo} alt="woodnotefinery_logo" width={250}/>
+              </Link>
+            </span>      
+          </div>  
 
-          <span className='logo'>
-            <Link to={'/'}>
-              <img src={logo} alt="woodnotefinery_logo" width={250}/>
-            </Link>
-          </span>        
 
-          <span className='nav-links center'>
-            <span>
-              <Link to={"/"}>Home</Link>
-            </span>
-            <span>
-            <Link to={"/catalog"}>Catalog</Link>
-            </span>
-            {/* <span>
-              Contact
-            </span> */}
 
-            <span className='cart'>
 
-            <span className=''>
-            <button className="button-style-1" onClick={() => handleCartToggle()}>
-              <div style={{ position: "relative" }}>
-                  <FontAwesomeIcon icon={faShoppingCart} className="icon" />
+            <div className='nav-links header center'>
 
-                  <span className="color-indicator-1 count-position">
-                    {totalItems > 0 ? `(${totalItems})` : ""}
-                    {}
+              <div className='main-links'>
+                  <span>
+                    <Link to={"/"}>Home</Link>
+                  </span>
+                  <span>
+                  <Link to={"/catalog"}>Catalog</Link>
                   </span>
               </div>
-            </button>
-  
 
-              
-              <Link to={"/account"}><FontAwesomeIcon icon={faUser} className='icon'/></Link>
+           
+              <span className='cart'>
 
-              {email !== null && (
-                <button onClick={userSignOut} className="button-style-1">
-                  <FontAwesomeIcon icon={faArrowRightFromBracket} className="icon " />
+                <span className=''>
+                <button className="button-style-1" onClick={() => handleCartToggle()}>
+                  <div style={{ position: "relative" }}>
+                      <FontAwesomeIcon icon={faShoppingCart} className="icon" />
+
+                      <span className="color-indicator-1 count-position">
+                        {totalItems > 0 ? `(${totalItems})` : ""}
+                        {}
+                      </span>
+                  </div>
                 </button>
-              )} 
-            
-            </span>
-          </span>
-          </span>
+                </span>
+      
+
+                  <span>
+                  <Link to={"/account"}><FontAwesomeIcon icon={faUser} className='icon'/></Link>
+
+                  {email !== null && (
+                    <button onClick={userSignOut} className="button-style-1">
+                      <FontAwesomeIcon icon={faArrowRightFromBracket} className="icon " />
+                    </button>
+                  )} 
+                
+                </span>
+              </span>
+              {/* </span> */}
+          </div>
+
           
-        </header>
         
         
         </>

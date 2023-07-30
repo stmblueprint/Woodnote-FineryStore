@@ -76,13 +76,16 @@ export const CreateAccount = () => {
         <>
         <Header/>
          
-        <div className="center form-style">
+          <div className=" positive-msg-1-container">
+            <div className="positive-msg-1 center">Quick and easy account creation to start shopping!</div>
+          </div>   
+
+          <div className="center">
             <form className="form-style" onSubmit={register}>
-            <div className="center positive-msg-1-container"><div className="positive-msg-1 center">Fast and easy account creation to start shopping!</div></div>   
 
 
-                <div className="contact-container" style={{paddingBottom: "30px"}}>
-                <div className="heading-2 center">Create Account</div>
+                <div className="contact-container">
+                <div className="heading-2 center" style={{paddingBottom: "30px"}}>Create Account</div>
 
                     <label htmlFor="email"> Email address <span style={{color:"red"}}>*</span> </label>
                     <div className="input-container"> 
@@ -133,7 +136,7 @@ export const CreateAccount = () => {
                 </div>
 
             </form>
-        </div>
+            </div>
 
         
         
@@ -174,14 +177,15 @@ export const SignIn = () => {
     return(
         <>
         <Header/>
-        <div className="center form-style">
 
+        <div className=" positive-msg-1-container"><div className="positive-msg-1 center">Quick and easy sign in to continue shopping!</div></div>   
+
+        <div className=" center">
             <form className="form-style" onSubmit={signIn}>
-            <div className="center positive-msg-1-container"><div className="positive-msg-1 center">Fast and easy sign in to continue shopping!</div></div>   
 
 
                 <div className="contact-container" style={{paddingBottom: "30px"}}>
-                <div className="heading-2 center">Welcome back</div>
+                <div className="heading-2 center" style={{paddingBottom: "30px"}}>Welcome back</div>
 
                     <label htmlFor="email"> Email address <span style={{color:"red"}}>*</span> </label>
                     <div className="input-container"> 

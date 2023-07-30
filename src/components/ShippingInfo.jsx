@@ -162,7 +162,7 @@ const ShippingInfo = () => {
         <>
         {/* make it reuseable */}
         <Header/>
-        <div className="center form-style">
+        <div className="center">
             <form className="form-style" onSubmit={handleSubmit}>
 
                 <div className="contact-container" style={{paddingBottom: "30px"}}>
@@ -179,10 +179,11 @@ const ShippingInfo = () => {
                         />
                     </div>
                 </div>
-                <hr style={{opacity: "0.3"}}/>
 
 
                 <div className="shipping-container">
+                <hr style={{opacity: "0.3"}}/>
+
                 <div className="heading-2"> Shipping information</div>
 
                     <div className="label-input-container">

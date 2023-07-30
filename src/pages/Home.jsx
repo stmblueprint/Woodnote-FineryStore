@@ -19,9 +19,9 @@ const Body = () => {
         <body>
             {/* top */}
             <section className="homepage-intro-section-container center">
-                <div >
+                <div className="media-container-style-1">
                     <div className="heading-1">Find unique clothing 
-                        designs created by <br/>the artist; @stmblueprint.
+                        designs created by the artist; @stmblueprint.
                     </div>
                         <br/>
                         <div className="caption-1">
@@ -79,17 +79,19 @@ const Body = () => {
 
 
              {/* bottom */}
-             <section className="homepage-bottom-section-container center">
+             <section className="homepage-bottom-section-container">
                 <div>
-                        <div className="heading-1">
+                    <div className="subscription-sec-1">
+                        <div className="heading-1 ">
                             Subscribe to our Newsletter
                         </div>
 
-                        <div className="caption-1">
+                        <div className="caption-1 ">
                           receive email updates on our newest products <br/>and designs.
                         </div>
+                    </div>
 
-                        <div className="subscription-section">
+                        <div className="subscription-section center">
                             <input type="email" name="email" placeholder="Enter your email here"/>
                             <button className="subscription-button">SUBSCRIBE</button>
                         </div>

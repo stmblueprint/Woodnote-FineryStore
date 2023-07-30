@@ -51,16 +51,20 @@ body{
   align-items: center;
   justify-content: center;
 }
+
 .header-grid{
   display: grid;
+  grid-template-columns: auto auto auto;
+
 }
+
 .header{
 
   display: flex;
   /* border: 1px solid black; */
   /* margin-top: 50px; */
   background: rgba(244, 242, 231, 0.879);
-  height: 5rem;
+  /* height: 5rem; */
   width: 100vw;
   /* box-shadow: 6px 6px 10px rgba(169, 169, 169, 0.561); */
   -webkit-backdrop-filter: blur(5px);
@@ -68,22 +72,44 @@ body{
   margin-bottom: 50px;
 
 }
+@media (max-width: 900px){
+  .header-grid{
+    display: grid;
+    grid-template-columns: auto;
+  
+  }
+
+ 
+}
 .logo{
-  position: absolute;
-  left: 1rem;
+  left: 0%;
+}
+.header-logo{
+  background-color: rgba(248, 250, 215, 0.362)
 }
 .cart{
 
-  position: absolute;
-  right: 15%;
+ 
 }
 .cart{
   display: grid;
-  grid-template-columns: auto ;
+  grid-template-columns: auto auto;
+}
+.main-links{
+  display: grid;
+  grid-template-columns: 10vw 10vw;
+  gap: 20px;
+  
+}
+.nav-links{
+  display: grid;
+  grid-template-columns: 0.8fr auto;
+  gap: 20vw;
 }
 
 .nav-links > span{
-  padding-left: 50px;
+  margin: 20px;
+  gap: 10px;
   font-size: 18px;
 }
 
@@ -103,8 +129,10 @@ body{
 
 .homepage-intro-section-container{
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto;
   gap: 10vw;
+  scale: 0.9;
+ 
 }
 
 .homepage-mid-section-container{
@@ -273,7 +301,7 @@ a{
   gap: 18vw;
 }
 .subscription-section > input{
-  width: 300px;
+  width: 30vw;
   padding: 10px;
   font-size: 15px;
 
@@ -334,6 +362,7 @@ a{
   position: relative;
 }
 .child-1{
+  overflow-x: hidden;
   position: absolute;
   z-index: 1;
   right: 0%;
@@ -383,7 +412,9 @@ a{
   width: 90%;
   /* transition: background-color 0.3s ease; */
 }
-
+.button-style-2 {
+  
+}
 .button-style-2 > button{
   color: white;
 }
@@ -450,11 +481,10 @@ a{
 
 .form-style{
   background-color: rgba(243, 241, 241, 0.262);
-  margin-left: auto;
-  margin-right: auto;
   border-radius: 12px;
   width: 80vw;
   border: 1px rgba(0, 0, 0, 0.053) solid;
+  padding: 20px;
 }
 
 form > div{
@@ -510,7 +540,7 @@ form > div{
 .form-container{
   border-radius: 3px;
   border: 0.6px solid rgba(172, 172, 172, 0.737);
-  width: 70vw;
+  width: 80vw;
   padding: 10px;
 }
 
@@ -542,15 +572,14 @@ form > div{
 }
 
 .positive-msg-1-container{
-  margin-top: -55px;
-
+  /* margin-top: -55px; */
+  margin-bottom: 10px;
+  width: 100vw;
 }
 .positive-msg-1{
   background-color: rgba(167, 213, 115, 0.19);
   color: rgb(54, 141, 63);
-  font-size: 20px;
-  height: 10px;
-  width: 100vw;
+  font-size: 19px;
   padding: 10px;
   border-radius: 4px;
 }
@@ -572,9 +601,8 @@ form > div{
   margin: 30px;
 }
 .home-grid-positioning-1{
-  translate: -10px -100px;
-  font-size: 25px;
-  
+  translate: 0px -100px;
+  margin-left: 15px;  
 }
 
 .home-grid-positioning-2{
@@ -601,4 +629,47 @@ form > div{
 
 .variant-style:hover{
   transform: scale(1.2);
+}
+.subscription-section{
+  margin-top: 20px;
+}
+
+.contact-container{
+  margin-bottom: -30px;
+}
+
+@media (max-width: 700px) {
+
+  /* Homepage */
+  .media-container-style-1{
+    
+  }
+  .homepage-intro-section-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    scale: 0.65;
+  }
+  .homepage-mid-section-container{
+    margin-top: -100px;
+    scale: 0.5;
+  }
+  .homepage-bottom-section-container{
+    margin-top: -40px;
+    
+  }
+  .subscription-section{
+    margin-top: 20px;
+  }
+
+  /* Product View */
+  .product-view-grid-1{
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 6vw;
+    
+  }
+  .description-container{
+    max-width: 190rem;
+  }
 }

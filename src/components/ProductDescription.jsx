@@ -27,7 +27,7 @@ const ProductDescription = ({ description, setDescription, currentId }) => {
     return(
 
         <div>
-            <div style={{width: "30vw", margin: "10px"}}>
+            <div>
                 {description}
                 {currentId == "33017314" ? 
                     <ul>

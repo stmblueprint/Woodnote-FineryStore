@@ -130,6 +130,8 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
       setTotalItems(cartItems.length)
     }, [cartItems, setTotalItems]);
 
+  
+
   return (
     <>
     {cartItems.price}
@@ -174,20 +176,21 @@ const CartPopup = ({ isOpen, setIsOpen, totalItems, setTotalItems}) => {
           </div>
 
           <div className="cart-footer">
-            <div className="subtotal" style={{fontWeight: "bold"}}>
-              <span>Subtotal: </span>
-              <span>${subtotal.toFixed(2)}</span>
-            </div>
-            
-            <div className="button-style-2 center"style={{marginTop: "bold"}}>
-               <button className="button-style-1">
-               {cartId ? (
-                  <Link to={"/shipping"} style={{ color: "white" }}>
-                    Checkout
-                  </Link>) : (<Link to={"/account"} style={{ color: "white" }}>Checkout</Link>
-                )}
-               </button>
-            </div>
+          
+              
+               { totalItems === 0 ? (<div className="empty-cart">Cart is Empty</div> )
+                
+                : (
+                   <>
+                      <div className="subtotal center" style={{fontWeight: "bold"}}>
+                        <span>Subtotal: </span>
+                        <span>${subtotal.toFixed(2)}</span>
+                      </div>
+                      <div className="button-style-2 center"style={{marginTop: "bold"}}>
+                          <button className="button-style-1"><Link to={"/shipping"} style={{ color: "white" }}>Checkout</Link></button>
+                      </div>
+                   </>
+                  )}
           </div>
         </div>
       )}
