@@ -1,6 +1,6 @@
-# Clothing Store that utilizes Printful API to automatically create and display products
+# Clothing Store that utilizes Printful API to automatically create, display, and manage products.
 
-## Stack and Technologies
+## Stack and Resources
 
 ### Amazon Web Services: AWS API Gateway, Lambda, S3, Amplify
 ### Database: Firebase Auth, Firestore
