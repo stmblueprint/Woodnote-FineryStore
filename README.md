@@ -1,4 +1,4 @@
-# Clothing Store that utilizes Printful API to automatically create, display, and manage products.
+# This is an E-Commerce Website developed with React.js, which leverages the Printful API to automate the creation, display, and management of products, orders, and information.
 
 ## Stack and Resources
 
